@@ -58,6 +58,7 @@ const Employees = () => {
 
   return (
     <div className="page-container">
+        
       <div className="page-header">
         <h1>Gestión de Empleados</h1>
         <div className="header-actions">
@@ -69,6 +70,21 @@ const Employees = () => {
           </button>
         </div>
       </div>
+
+      <div className="stats-grid">
+          <div className="stat-card">
+            <h3>Total Empleados</h3>
+            <p className="stat-value">{employees.length}</p>
+          </div>
+          <div className="stat-card">
+            <h3>Activos</h3>
+            <p className="stat-value">{employees.filter(e => e.status === 'Activo').length}</p>
+          </div>
+          <div className="stat-card">
+            <h3>Departamentos</h3>
+            <p className="stat-value">{new Set(employees.map(e => e.department)).size}</p>
+          </div>
+        </div>
 
       <div className="page-content">
         <div className="table-container">
@@ -113,20 +129,6 @@ const Employees = () => {
           </table>
         </div>
 
-        <div className="stats-grid">
-          <div className="stat-card">
-            <h3>Total Empleados</h3>
-            <p className="stat-value">{employees.length}</p>
-          </div>
-          <div className="stat-card">
-            <h3>Activos</h3>
-            <p className="stat-value">{employees.filter(e => e.status === 'Activo').length}</p>
-          </div>
-          <div className="stat-card">
-            <h3>Departamentos</h3>
-            <p className="stat-value">{new Set(employees.map(e => e.department)).size}</p>
-          </div>
-        </div>
       </div>
     </div>
   );
