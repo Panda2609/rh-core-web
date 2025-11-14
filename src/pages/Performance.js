@@ -85,6 +85,35 @@ const Performance = () => {
       </div>
 
       <div className="page-content">
+
+        <div className="stats-grid">
+          <div className="stat-card">
+            <h3>Total Evaluaciones</h3>
+            <p className="stat-value">{evaluations.length}</p>
+          </div>
+          <div className="stat-card">
+            <h3>Promedio General</h3>
+            <p className="stat-value">
+              {(
+                evaluations.reduce((sum, e) => sum + e.score, 0) /
+                evaluations.length
+              ).toFixed(1)}
+            </p>
+          </div>
+          <div className="stat-card">
+            <h3>Desempeño Máximo</h3>
+            <p className="stat-value">
+              {Math.max(...evaluations.map((e) => e.score)).toFixed(1)}
+            </p>
+          </div>
+          <div className="stat-card">
+            <h3>Desempeño Mínimo</h3>
+            <p className="stat-value">
+              {Math.min(...evaluations.map((e) => e.score)).toFixed(1)}
+            </p>
+          </div>
+        </div>
+
         <div className="content-section">
           <h2>Evaluaciones Semestrales</h2>
           <div className="evaluations-grid">
@@ -192,33 +221,6 @@ const Performance = () => {
           </div>
         </div>
 
-        <div className="stats-grid">
-          <div className="stat-card">
-            <h3>Total Evaluaciones</h3>
-            <p className="stat-value">{evaluations.length}</p>
-          </div>
-          <div className="stat-card">
-            <h3>Promedio General</h3>
-            <p className="stat-value">
-              {(
-                evaluations.reduce((sum, e) => sum + e.score, 0) /
-                evaluations.length
-              ).toFixed(1)}
-            </p>
-          </div>
-          <div className="stat-card">
-            <h3>Desempeño Máximo</h3>
-            <p className="stat-value">
-              {Math.max(...evaluations.map((e) => e.score)).toFixed(1)}
-            </p>
-          </div>
-          <div className="stat-card">
-            <h3>Desempeño Mínimo</h3>
-            <p className="stat-value">
-              {Math.min(...evaluations.map((e) => e.score)).toFixed(1)}
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   );
