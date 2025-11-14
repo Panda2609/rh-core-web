@@ -74,6 +74,37 @@ const Payroll = () => {
       </div>
 
       <div className="page-content">
+
+        <div className="liquidation-section">
+          <h2>Resumen de Liquidación General</h2>
+          <div className="liquidation-grid">
+            <div className="liquidation-card">
+              <h3>Sueldo Base Total</h3>
+              <p className="value">{formatCurrency(liquidationData.totalPayroll)}</p>
+            </div>
+            <div className="liquidation-card">
+              <h3>Horas Extra</h3>
+              <p className="value">{formatCurrency(liquidationData.totalOvertime)}</p>
+            </div>
+            <div className="liquidation-card">
+              <h3>Bonos</h3>
+              <p className="value positive">{formatCurrency(liquidationData.totalBonuses)}</p>
+            </div>
+            <div className="liquidation-card">
+              <h3>Descuentos</h3>
+              <p className="value negative">{formatCurrency(liquidationData.totalDiscounts)}</p>
+            </div>
+            <div className="liquidation-card">
+              <h3>Retenciones Fiscales</h3>
+              <p className="value negative">{formatCurrency(liquidationData.totalTaxes)}</p>
+            </div>
+            <div className="liquidation-card highlight">
+              <h3>Total a Pagar (Neto)</h3>
+              <p className="value large">{formatCurrency(liquidationData.netTotal)}</p>
+            </div>
+          </div>
+        </div>
+
         <div className="content-section">
           <h2>Cálculo de Sueldos - Noviembre 2025</h2>
           <div className="table-container">
@@ -115,36 +146,6 @@ const Payroll = () => {
                 ))}
               </tbody>
             </table>
-          </div>
-        </div>
-
-        <div className="liquidation-section">
-          <h2>Resumen de Liquidación General</h2>
-          <div className="liquidation-grid">
-            <div className="liquidation-card">
-              <h3>Sueldo Base Total</h3>
-              <p className="value">{formatCurrency(liquidationData.totalPayroll)}</p>
-            </div>
-            <div className="liquidation-card">
-              <h3>Horas Extra</h3>
-              <p className="value">{formatCurrency(liquidationData.totalOvertime)}</p>
-            </div>
-            <div className="liquidation-card">
-              <h3>Bonos</h3>
-              <p className="value positive">{formatCurrency(liquidationData.totalBonuses)}</p>
-            </div>
-            <div className="liquidation-card">
-              <h3>Descuentos</h3>
-              <p className="value negative">{formatCurrency(liquidationData.totalDiscounts)}</p>
-            </div>
-            <div className="liquidation-card">
-              <h3>Retenciones Fiscales</h3>
-              <p className="value negative">{formatCurrency(liquidationData.totalTaxes)}</p>
-            </div>
-            <div className="liquidation-card highlight">
-              <h3>Total a Pagar (Neto)</h3>
-              <p className="value large">{formatCurrency(liquidationData.netTotal)}</p>
-            </div>
           </div>
         </div>
 
