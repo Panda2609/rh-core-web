@@ -203,13 +203,12 @@
 }
 
 .badge {
-  display: inline-block;
+  display: inline-flex;
   width: 32px;
   height: 32px;
   border-radius: 50%;
   background-color: #667eea;
   color: white;
-  display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
@@ -217,23 +216,27 @@
 }
 
 .hours-badge {
-  display: inline-block;
+  display: inline-flex;
   padding: 6px 12px;
   background-color: #e3f2fd;
   color: #1976d2;
   border-radius: 20px;
   font-weight: 600;
   font-size: 13px;
+  align-items: center;
+  justify-content: center;
 }
 
 .average {
-  display: inline-block;
+  display: inline-flex;
   padding: 6px 12px;
   background-color: #f3e5f5;
   color: #7b1fa2;
   border-radius: 20px;
   font-weight: 600;
   font-size: 13px;
+  align-items: center;
+  justify-content: center;
 }
 
 .stats-grid {
