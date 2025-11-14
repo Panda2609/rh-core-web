@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { FaGraduationCap, FaCheckCircle, FaClock, FaUsers } from 'react-icons/fa';
 import { trainingsData, attendanceByEmployee } from '../data/training';
+import Modal from '../components/Modal';
+import DevelopmentNotice from '../components/DevelopmentNotice';
 import './Training.css';
 
 const Training = () => {
   const [trainings] = useState(trainingsData);
   const [attendance] = useState(attendanceByEmployee);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+
+  const openModal = (title) => {
+    setModalTitle(title);
+    setIsModalOpen(true);
+  };
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -37,7 +46,10 @@ const Training = () => {
     <div className="page-container">
       <div className="page-header">
         <h1>Gestión de Capacitación</h1>
-        <button className="btn btn-primary">
+        <button 
+          className="btn btn-primary"
+          onClick={() => openModal('Registrar Capacitación')}
+        >
           <FaGraduationCap /> Registrar Capacitación
         </button>
       </div>
@@ -145,6 +157,15 @@ const Training = () => {
 
         
       </div>
+
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        title={modalTitle}
+        size="medium"
+      >
+        <DevelopmentNotice feature={modalTitle} />
+      </Modal>
     </div>
   );
 };

@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { FaStar, FaPlusCircle } from 'react-icons/fa';
 import { evaluationsData, performanceByArea } from '../data/performance';
+import Modal from '../components/Modal';
+import DevelopmentNotice from '../components/DevelopmentNotice';
 import './Performance.css';
 
 const Performance = () => {
   const [evaluations] = useState(evaluationsData);
   const [performanceAreaData] = useState(performanceByArea);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+
+  const openModal = (title) => {
+    setModalTitle(title);
+    setIsModalOpen(true);
+  };
 
   const getScoreColor = (score) => {
     if (score >= 9) return '#4caf50';
@@ -31,7 +40,10 @@ const Performance = () => {
     <div className="page-container">
       <div className="page-header">
         <h1>Evaluaciones de Desempeño</h1>
-        <button className="btn btn-primary">
+        <button 
+          className="btn btn-primary"
+          onClick={() => openModal('Nueva Evaluación de Desempeño')}
+        >
           <FaPlusCircle /> Nueva Evaluación
         </button>
       </div>
@@ -174,6 +186,15 @@ const Performance = () => {
         </div>
 
       </div>
+
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        title={modalTitle}
+        size="medium"
+      >
+        <DevelopmentNotice feature={modalTitle} />
+      </Modal>
     </div>
   );
 };

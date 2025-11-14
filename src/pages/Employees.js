@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaPlus, FaDownload } from 'react-icons/fa';
 import { employeesData } from '../data/employees';
+import Modal from '../components/Modal';
+import DevelopmentNotice from '../components/DevelopmentNotice';
 import './Employees.css';
 
 const Employees = () => {
   const [employees] = useState(employeesData);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+
+  const openModal = (title) => {
+    setModalTitle(title);
+    setIsModalOpen(true);
+  };
 
   return (
     <div className="page-container">
@@ -12,10 +21,16 @@ const Employees = () => {
       <div className="page-header">
         <h1>Gestión de Empleados</h1>
         <div className="header-actions">
-          <button className="btn btn-primary">
+          <button 
+            className="btn btn-primary"
+            onClick={() => openModal('Nuevo Empleado')}
+          >
             <FaPlus /> Nuevo Empleado
           </button>
-          <button className="btn btn-secondary">
+          <button 
+            className="btn btn-secondary"
+            onClick={() => openModal('Exportar Empleados')}
+          >
             <FaDownload /> Exportar
           </button>
         </div>
@@ -66,10 +81,19 @@ const Employees = () => {
                     </span>
                   </td>
                   <td>
-                    <button className="btn-icon btn-edit" title="Editar" style={{ marginRight: '8px' }}>
+                    <button 
+                      className="btn-icon btn-edit" 
+                      title="Editar" 
+                      style={{ marginRight: '8px' }}
+                      onClick={() => openModal(`Editar Empleado: ${employee.name}`)}
+                    >
                       <FaEdit />
                     </button>
-                    <button className="btn-icon btn-delete" title="Eliminar">
+                    <button 
+                      className="btn-icon btn-delete" 
+                      title="Eliminar"
+                      onClick={() => openModal(`Eliminar Empleado: ${employee.name}`)}
+                    >
                       <FaTrash />
                     </button>
                   </td>
@@ -78,8 +102,16 @@ const Employees = () => {
             </tbody>
           </table>
         </div>
-
       </div>
+
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        title={modalTitle}
+        size="medium"
+      >
+        <DevelopmentNotice feature={modalTitle} />
+      </Modal>
     </div>
   );
 };

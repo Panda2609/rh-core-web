@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { FaCheck, FaTimes, FaClock, FaCalendarAlt } from 'react-icons/fa';
 import { attendanceData, leavesData } from '../data/attendance';
+import Modal from '../components/Modal';
+import DevelopmentNotice from '../components/DevelopmentNotice';
 import './Attendance.css';
 
 const Attendance = () => {
   const [attendance] = useState(attendanceData);
   const [leaves] = useState(leavesData);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+
+  const openModal = (title) => {
+    setModalTitle(title);
+    setIsModalOpen(true);
+  };
 
   const getStatusIcon = (status) => {
     switch (status) {
@@ -111,6 +120,15 @@ const Attendance = () => {
         </div>
 
       </div>
+
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        title={modalTitle}
+        size="medium"
+      >
+        <DevelopmentNotice feature={modalTitle} />
+      </Modal>
     </div>
   );
 };

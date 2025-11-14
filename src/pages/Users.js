@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { FaUserShield, FaEdit, FaTrash, FaPlus, FaLock } from 'react-icons/fa';
 import { usersData, rolesData } from '../data/users';
+import Modal from '../components/Modal';
+import DevelopmentNotice from '../components/DevelopmentNotice';
 import './Users.css';
 
 const Users = () => {
   const [users] = useState(usersData);
   const [roles] = useState(rolesData);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+
+  const openModal = (title) => {
+    setModalTitle(title);
+    setIsModalOpen(true);
+  };
 
   const getRoleBadgeColor = (role) => {
     const roleData = roles.find(r => r.name === role);
@@ -16,7 +25,7 @@ const Users = () => {
     <div className="page-container">
       <div className="page-header">
         <h1>Usuarios y Roles</h1>
-        <button className="btn btn-primary">
+        <button className="btn btn-primary" onClick={() => openModal('Nuevo Usuario')}>
           <FaPlus /> Nuevo Usuario
         </button>
       </div>
@@ -79,10 +88,19 @@ const Users = () => {
                     </td>
                     <td className="last-login">{user.lastLogin}</td>
                     <td>
-                      <button className="btn-icon btn-edit" title="Editar" style={{ marginRight: '8px' }}>
+                      <button 
+                        className="btn-icon btn-edit" 
+                        title="Editar" 
+                        style={{ marginRight: '8px' }}
+                        onClick={() => openModal(`Editar Usuario: ${user.name}`)}
+                      >
                         <FaEdit />
                       </button>
-                      <button className="btn-icon btn-delete" title="Eliminar">
+                      <button 
+                        className="btn-icon btn-delete" 
+                        title="Eliminar"
+                        onClick={() => openModal(`Eliminar Usuario: ${user.name}`)}
+                      >
                         <FaTrash />
                       </button>
                     </td>
@@ -116,8 +134,18 @@ const Users = () => {
                 </div>
 
                 <div className="role-actions">
-                  <button className="btn-small">Editar Rol</button>
-                  <button className="btn-small btn-danger">Eliminar</button>
+                  <button 
+                    className="btn-small"
+                    onClick={() => openModal(`Editar Rol: ${role.name}`)}
+                  >
+                    Editar Rol
+                  </button>
+                  <button 
+                    className="btn-small btn-danger"
+                    onClick={() => openModal(`Eliminar Rol: ${role.name}`)}
+                  >
+                    Eliminar
+                  </button>
                 </div>
               </div>
             ))}
@@ -130,27 +158,55 @@ const Users = () => {
             <div className="security-item">
               <h4>Políticas de Contraseña</h4>
               <p>Configurar requisitos mínimos de seguridad</p>
-              <button className="btn-secondary">Configurar</button>
+              <button 
+                className="btn-secondary"
+                onClick={() => openModal('Políticas de Contraseña')}
+              >
+                Configurar
+              </button>
             </div>
             <div className="security-item">
               <h4>Auditoría y Logs</h4>
               <p>Ver registro de accesos y cambios en el sistema</p>
-              <button className="btn-secondary">Ver Logs</button>
+              <button 
+                className="btn-secondary"
+                onClick={() => openModal('Auditoría y Logs')}
+              >
+                Ver Logs
+              </button>
             </div>
             <div className="security-item">
               <h4>Permisos por Módulo</h4>
               <p>Asignar permisos granulares a cada módulo</p>
-              <button className="btn-secondary">Gestionar Permisos</button>
+              <button 
+                className="btn-secondary"
+                onClick={() => openModal('Gestionar Permisos por Módulo')}
+              >
+                Gestionar Permisos
+              </button>
             </div>
             <div className="security-item">
               <h4>Backup y Recuperación</h4>
               <p>Realizar copias de seguridad del sistema</p>
-              <button className="btn-secondary">Ejecutar Backup</button>
+              <button 
+                className="btn-secondary"
+                onClick={() => openModal('Backup y Recuperación')}
+              >
+                Ejecutar Backup
+              </button>
             </div>
           </div>
         </div>
-
       </div>
+
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        title={modalTitle}
+        size="medium"
+      >
+        <DevelopmentNotice feature={modalTitle} />
+      </Modal>
     </div>
   );
 };

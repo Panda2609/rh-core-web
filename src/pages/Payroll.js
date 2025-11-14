@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import { FaFileDownload, FaCalculator } from 'react-icons/fa';
 import { payrollsData, liquidationData } from '../data/payroll';
+import Modal from '../components/Modal';
+import DevelopmentNotice from '../components/DevelopmentNotice';
 import './Payroll.css';
 
 const Payroll = () => {
   const [payrolls] = useState(payrollsData);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+
+  const openModal = (title) => {
+    setModalTitle(title);
+    setIsModalOpen(true);
+  };
   const [liquidation] = useState(liquidationData);
 
   const formatCurrency = (value) => {
@@ -20,10 +29,16 @@ const Payroll = () => {
       <div className="page-header">
         <h1>Gestión de Remuneraciones</h1>
         <div className="header-actions">
-          <button className="btn btn-primary">
+          <button 
+            className="btn btn-primary"
+            onClick={() => openModal('Calcular Nómina')}
+          >
             <FaCalculator /> Calcular Nómina
           </button>
-          <button className="btn btn-secondary">
+          <button 
+            className="btn btn-secondary"
+            onClick={() => openModal('Generar Liquidaciones')}
+          >
             <FaFileDownload /> Generar Liquidaciones
           </button>
         </div>
@@ -94,7 +109,10 @@ const Payroll = () => {
                     <td className="tax">{formatCurrency(payroll.taxRetention)}</td>
                     <td className="net-salary">{formatCurrency(payroll.netSalary)}</td>
                     <td>
-                      <button className="btn-icon btn-download">
+                      <button 
+                        className="btn-icon btn-download"
+                        onClick={() => openModal(`Descargar Nómina: ${payroll.employee}`)}
+                      >
                         <FaFileDownload />
                       </button>
                     </td>
@@ -108,20 +126,41 @@ const Payroll = () => {
         <div className="content-section">
           <h2>Reportes para Contabilidad</h2>
           <div className="reports-buttons">
-            <button className="btn-report">
+            <button 
+              className="btn-report"
+              onClick={() => openModal('Reporte Mensual Excel')}
+            >
               <FaFileDownload /> Reporte Mensual Excel
             </button>
-            <button className="btn-report">
+            <button 
+              className="btn-report"
+              onClick={() => openModal('Reporte Anual')}
+            >
               <FaFileDownload /> Reporte Anual
             </button>
-            <button className="btn-report">
+            <button 
+              className="btn-report"
+              onClick={() => openModal('Registro de Impuestos')}
+            >
               <FaFileDownload /> Registro de Impuestos
             </button>
-            <button className="btn-report">
+            <button 
+              className="btn-report"
+              onClick={() => openModal('Resumen AFP')}
+            >
               <FaFileDownload /> Resumen AFP
             </button>
           </div>
         </div>
+
+        <Modal 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+          title={modalTitle}
+          size="medium"
+        >
+          <DevelopmentNotice feature={modalTitle} />
+        </Modal>
       </div>
     </div>
   );
