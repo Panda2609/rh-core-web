@@ -113,6 +113,26 @@ const Users = () => {
       </div>
 
       <div className="page-content">
+
+        <div className="stats-grid">
+          <div className="stat-card">
+            <h3>Usuarios Activos</h3>
+            <p className="stat-value">{users.filter(u => u.status === 'Activo').length}</p>
+          </div>
+          <div className="stat-card">
+            <h3>Usuarios Inactivos</h3>
+            <p className="stat-value">{users.filter(u => u.status === 'Inactivo').length}</p>
+          </div>
+          <div className="stat-card">
+            <h3>Roles Disponibles</h3>
+            <p className="stat-value">{roles.length}</p>
+          </div>
+          <div className="stat-card">
+            <h3>Total Usuarios</h3>
+            <p className="stat-value">{users.length}</p>
+          </div>
+        </div>
+
         <div className="content-section">
           <h2>Gestión de Usuarios</h2>
           <div className="table-container">
@@ -221,24 +241,6 @@ const Users = () => {
           </div>
         </div>
 
-        <div className="stats-grid">
-          <div className="stat-card">
-            <h3>Usuarios Activos</h3>
-            <p className="stat-value">{users.filter(u => u.status === 'Activo').length}</p>
-          </div>
-          <div className="stat-card">
-            <h3>Usuarios Inactivos</h3>
-            <p className="stat-value">{users.filter(u => u.status === 'Inactivo').length}</p>
-          </div>
-          <div className="stat-card">
-            <h3>Roles Disponibles</h3>
-            <p className="stat-value">{roles.length}</p>
-          </div>
-          <div className="stat-card">
-            <h3>Total Usuarios</h3>
-            <p className="stat-value">{users.length}</p>
-          </div>
-        </div>
       </div>
     </div>
   );
