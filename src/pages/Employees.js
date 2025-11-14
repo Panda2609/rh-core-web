@@ -1,64 +1,14 @@
 import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaPlus, FaDownload } from 'react-icons/fa';
+import { employeesData } from '../data/employees';
 import './Employees.css';
 
 const Employees = () => {
-  const [employees] = useState([
-    {
-      id: 1,
-      name: 'Juan Pérez García',
-      position: 'Desarrollador Senior',
-      department: 'Tecnología',
-      email: 'juan.perez@company.com',
-      phone: '+56912345678',
-      hireDate: '2020-01-15',
-      status: 'Activo',
-    },
-    {
-      id: 2,
-      name: 'María López Rodríguez',
-      position: 'Gerente de RRHH',
-      department: 'Recursos Humanos',
-      email: 'maria.lopez@company.com',
-      phone: '+56987654321',
-      hireDate: '2018-05-20',
-      status: 'Activo',
-    },
-    {
-      id: 3,
-      name: 'Carlos Martínez Silva',
-      position: 'Analista Financiero',
-      department: 'Finanzas',
-      email: 'carlos.martinez@company.com',
-      phone: '+56911223344',
-      hireDate: '2019-08-10',
-      status: 'Activo',
-    },
-    {
-      id: 4,
-      name: 'Ana González Torres',
-      position: 'Especialista en Marketing',
-      department: 'Marketing',
-      email: 'ana.gonzalez@company.com',
-      phone: '+56955667788',
-      hireDate: '2021-03-25',
-      status: 'Activo',
-    },
-    {
-      id: 5,
-      name: 'Roberto Fernández Díaz',
-      position: 'Técnico de Soporte',
-      department: 'Tecnología',
-      email: 'roberto.fernandez@company.com',
-      phone: '+56922334455',
-      hireDate: '2022-06-01',
-      status: 'Activo',
-    },
-  ]);
+  const [employees] = useState(employeesData);
 
   return (
     <div className="page-container">
-        
+
       <div className="page-header">
         <h1>Gestión de Empleados</h1>
         <div className="header-actions">

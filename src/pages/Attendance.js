@@ -1,85 +1,11 @@
 import React, { useState } from 'react';
 import { FaCheck, FaTimes, FaClock, FaCalendarAlt } from 'react-icons/fa';
+import { attendanceData, leavesData } from '../data/attendance';
 import './Attendance.css';
 
 const Attendance = () => {
-  const [attendance] = useState([
-    {
-      id: 1,
-      employee: 'Juan Pérez García',
-      date: '2025-11-13',
-      entryTime: '08:00',
-      exitTime: '17:30',
-      status: 'Presente',
-      hoursWorked: 9.5,
-    },
-    {
-      id: 2,
-      employee: 'María López Rodríguez',
-      date: '2025-11-13',
-      entryTime: '08:15',
-      exitTime: '17:45',
-      status: 'Presente',
-      hoursWorked: 9.5,
-    },
-    {
-      id: 3,
-      employee: 'Carlos Martínez Silva',
-      date: '2025-11-13',
-      entryTime: null,
-      exitTime: null,
-      status: 'Ausente',
-      hoursWorked: 0,
-    },
-    {
-      id: 4,
-      employee: 'Ana González Torres',
-      date: '2025-11-13',
-      entryTime: '09:00',
-      exitTime: '17:00',
-      status: 'Presente',
-      hoursWorked: 8,
-    },
-    {
-      id: 5,
-      employee: 'Roberto Fernández Díaz',
-      date: '2025-11-13',
-      entryTime: '08:30',
-      exitTime: '12:00',
-      status: 'Permiso',
-      hoursWorked: 3.5,
-    },
-  ]);
-
-  const [leaves] = useState([
-    {
-      id: 1,
-      employee: 'Pedro González',
-      type: 'Vacaciones',
-      startDate: '2025-11-20',
-      endDate: '2025-11-30',
-      days: 10,
-      status: 'Aprobado',
-    },
-    {
-      id: 2,
-      employee: 'Laura Martínez',
-      type: 'Licencia Médica',
-      startDate: '2025-11-15',
-      endDate: '2025-11-17',
-      days: 3,
-      status: 'Pendiente',
-    },
-    {
-      id: 3,
-      employee: 'David López',
-      type: 'Permisos',
-      startDate: '2025-11-14',
-      endDate: '2025-11-14',
-      days: 1,
-      status: 'Aprobado',
-    },
-  ]);
+  const [attendance] = useState(attendanceData);
+  const [leaves] = useState(leavesData);
 
   const getStatusIcon = (status) => {
     switch (status) {

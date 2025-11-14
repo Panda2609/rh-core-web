@@ -1,55 +1,11 @@
 import React, { useState } from 'react';
 import { FaFileDownload, FaCalculator } from 'react-icons/fa';
+import { payrollsData, liquidationData } from '../data/payroll';
 import './Payroll.css';
 
 const Payroll = () => {
-  const [payrolls] = useState([
-    {
-      id: 1,
-      employee: 'Juan Pérez García',
-      baseSalary: 1500000,
-      overtimeHours: 8,
-      overtimeValue: 80000,
-      bonuses: 100000,
-      discounts: 50000,
-      taxRetention: 150000,
-      netSalary: 1480000,
-      month: 'Noviembre 2025',
-    },
-    {
-      id: 2,
-      employee: 'María López Rodríguez',
-      baseSalary: 2000000,
-      overtimeHours: 4,
-      overtimeValue: 40000,
-      bonuses: 150000,
-      discounts: 75000,
-      taxRetention: 200000,
-      netSalary: 1915000,
-      month: 'Noviembre 2025',
-    },
-    {
-      id: 3,
-      employee: 'Carlos Martínez Silva',
-      baseSalary: 1800000,
-      overtimeHours: 10,
-      overtimeValue: 100000,
-      bonuses: 120000,
-      discounts: 60000,
-      taxRetention: 180000,
-      netSalary: 1780000,
-      month: 'Noviembre 2025',
-    },
-  ]);
-
-  const [liquidationData] = useState({
-    totalPayroll: 5175000,
-    totalOvertime: 220000,
-    totalBonuses: 370000,
-    totalDiscounts: 185000,
-    totalTaxes: 530000,
-    netTotal: 5175000,
-  });
+  const [payrolls] = useState(payrollsData);
+  const [liquidation] = useState(liquidationData);
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('es-CL', {
@@ -80,27 +36,27 @@ const Payroll = () => {
           <div className="liquidation-grid">
             <div className="liquidation-card">
               <h3>Sueldo Base Total</h3>
-              <p className="value">{formatCurrency(liquidationData.totalPayroll)}</p>
+              <p className="value">{formatCurrency(liquidation.totalPayroll)}</p>
             </div>
             <div className="liquidation-card">
               <h3>Horas Extra</h3>
-              <p className="value">{formatCurrency(liquidationData.totalOvertime)}</p>
+              <p className="value">{formatCurrency(liquidation.totalOvertime)}</p>
             </div>
             <div className="liquidation-card">
               <h3>Bonos</h3>
-              <p className="value positive">{formatCurrency(liquidationData.totalBonuses)}</p>
+              <p className="value positive">{formatCurrency(liquidation.totalBonuses)}</p>
             </div>
             <div className="liquidation-card">
               <h3>Descuentos</h3>
-              <p className="value negative">{formatCurrency(liquidationData.totalDiscounts)}</p>
+              <p className="value negative">{formatCurrency(liquidation.totalDiscounts)}</p>
             </div>
             <div className="liquidation-card">
               <h3>Retenciones Fiscales</h3>
-              <p className="value negative">{formatCurrency(liquidationData.totalTaxes)}</p>
+              <p className="value negative">{formatCurrency(liquidation.totalTaxes)}</p>
             </div>
             <div className="liquidation-card highlight">
               <h3>Total a Pagar (Neto)</h3>
-              <p className="value large">{formatCurrency(liquidationData.netTotal)}</p>
+              <p className="value large">{formatCurrency(liquidation.netTotal)}</p>
             </div>
           </div>
         </div>

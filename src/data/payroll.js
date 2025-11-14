@@ -1,0 +1,47 @@
+export const payrollsData = [
+  {
+    id: 1,
+    employee: 'Juan Pérez García',
+    baseSalary: 1500000,
+    overtimeHours: 8,
+    overtimeValue: 80000,
+    bonuses: 100000,
+    discounts: 50000,
+    taxRetention: 150000,
+    netSalary: 1480000,
+    month: 'Noviembre 2025',
+  },
+  {
+    id: 2,
+    employee: 'María López Rodríguez',
+    baseSalary: 2000000,
+    overtimeHours: 4,
+    overtimeValue: 40000,
+    bonuses: 150000,
+    discounts: 75000,
+    taxRetention: 200000,
+    netSalary: 1915000,
+    month: 'Noviembre 2025',
+  },
+  {
+    id: 3,
+    employee: 'Carlos Martínez Silva',
+    baseSalary: 1800000,
+    overtimeHours: 10,
+    overtimeValue: 100000,
+    bonuses: 120000,
+    discounts: 60000,
+    taxRetention: 180000,
+    netSalary: 1780000,
+    month: 'Noviembre 2025',
+  },
+];
+
+export const liquidationData = {
+  totalPayroll: 5175000,
+  totalOvertime: 220000,
+  totalBonuses: 370000,
+  totalDiscounts: 185000,
+  totalTaxes: 530000,
+  netTotal: 5175000,
+};

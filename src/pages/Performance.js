@@ -1,59 +1,11 @@
 import React, { useState } from 'react';
 import { FaStar, FaPlusCircle } from 'react-icons/fa';
+import { evaluationsData, performanceByArea } from '../data/performance';
 import './Performance.css';
 
 const Performance = () => {
-  const [evaluations] = useState([
-    {
-      id: 1,
-      employee: 'Juan Pérez García',
-      department: 'Tecnología',
-      period: 'Semestre 1 - 2025',
-      score: 8.5,
-      observations: 'Excelente desempeño, cumple objetivos a tiempo.',
-      competencies: {
-        technical: 9,
-        communication: 8,
-        leadership: 7.5,
-        teamwork: 9,
-      },
-    },
-    {
-      id: 2,
-      employee: 'María López Rodríguez',
-      department: 'Recursos Humanos',
-      period: 'Semestre 1 - 2025',
-      score: 9.2,
-      observations: 'Sobresaliente en gestión de procesos y relaciones interpersonales.',
-      competencies: {
-        technical: 9,
-        communication: 9.5,
-        leadership: 9,
-        teamwork: 9.5,
-      },
-    },
-    {
-      id: 3,
-      employee: 'Carlos Martínez Silva',
-      department: 'Finanzas',
-      period: 'Semestre 1 - 2025',
-      score: 7.8,
-      observations: 'Buen desempeño, requiere mejorar en comunicación de resultados.',
-      competencies: {
-        technical: 8.5,
-        communication: 7,
-        leadership: 7.5,
-        teamwork: 8,
-      },
-    },
-  ]);
-
-  const [performanceByArea] = useState([
-    { area: 'Tecnología', average: 8.3 },
-    { area: 'Recursos Humanos', average: 8.9 },
-    { area: 'Finanzas', average: 7.8 },
-    { area: 'Marketing', average: 8.1 },
-  ]);
+  const [evaluations] = useState(evaluationsData);
+  const [performanceAreaData] = useState(performanceByArea);
 
   const getScoreColor = (score) => {
     if (score >= 9) return '#4caf50';
@@ -201,7 +153,7 @@ const Performance = () => {
         <div className="content-section">
           <h2>Promedio de Desempeño por Área</h2>
           <div className="performance-chart">
-            {performanceByArea.map((item, index) => (
+            {performanceAreaData.map((item, index) => (
               <div key={index} className="chart-item">
                 <div className="chart-label">
                   <span>{item.area}</span>

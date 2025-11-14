@@ -1,62 +1,11 @@
 import React, { useState } from 'react';
 import { FaGraduationCap, FaCheckCircle, FaClock, FaUsers } from 'react-icons/fa';
+import { trainingsData, attendanceByEmployee } from '../data/training';
 import './Training.css';
 
 const Training = () => {
-  const [trainings] = useState([
-    {
-      id: 1,
-      name: 'React Avanzado',
-      type: 'Interna',
-      startDate: '2025-11-01',
-      endDate: '2025-11-15',
-      hours: 20,
-      participants: 8,
-      status: 'En Progreso',
-      instructors: 'Juan Gómez',
-    },
-    {
-      id: 2,
-      name: 'Liderazgo y Gestión',
-      type: 'Externa',
-      startDate: '2025-10-15',
-      endDate: '2025-10-30',
-      hours: 15,
-      participants: 12,
-      status: 'Completada',
-      instructors: 'María Fernández (Capacitadora Externa)',
-    },
-    {
-      id: 3,
-      name: 'Seguridad en Datos',
-      type: 'Interna',
-      startDate: '2025-11-20',
-      endDate: '2025-11-25',
-      hours: 12,
-      participants: 5,
-      status: 'Programada',
-      instructors: 'Carlos López',
-    },
-    {
-      id: 4,
-      name: 'Comunicación Efectiva',
-      type: 'Externa',
-      startDate: '2025-12-01',
-      endDate: '2025-12-05',
-      hours: 10,
-      participants: 15,
-      status: 'Programada',
-      instructors: 'Instituto de Capacitación ABC',
-    },
-  ]);
-
-  const [attendanceByEmployee] = useState([
-    { employee: 'Juan Pérez García', courses: 5, totalHours: 45 },
-    { employee: 'María López Rodríguez', courses: 8, totalHours: 72 },
-    { employee: 'Carlos Martínez Silva', courses: 3, totalHours: 28 },
-    { employee: 'Ana González Torres', courses: 6, totalHours: 54 },
-    { employee: 'Roberto Fernández Díaz', courses: 2, totalHours: 18 },
-  ]);
+  const [trainings] = useState(trainingsData);
+  const [attendance] = useState(attendanceByEmployee);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -173,7 +122,7 @@ const Training = () => {
                 </tr>
               </thead>
               <tbody>
-                {attendanceByEmployee.map((item, index) => (
+                {attendance.map((item, index) => (
                   <tr key={index}>
                     <td className="employee-name">{item.employee}</td>
                     <td className="centered">
