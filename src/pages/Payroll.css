@@ -86,12 +86,14 @@
 
 .table-container {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .payroll-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
+  min-width: 1000px;
 }
 
 .payroll-table thead {
@@ -101,16 +103,21 @@
 
 .payroll-table th {
   padding: 14px 12px;
-  text-align: left;
+  text-align: center;
   font-weight: 600;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
 }
 
 .payroll-table td {
   padding: 14px 12px;
   border-bottom: 1px solid #e0e0e0;
+  vertical-align: middle;
+  text-align: center;
 }
 
 .payroll-table tbody tr:hover {

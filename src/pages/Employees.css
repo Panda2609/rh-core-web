@@ -77,6 +77,7 @@
 .employees-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 900px;
 }
 
 .employees-table thead {
@@ -86,17 +87,22 @@
 
 .employees-table th {
   padding: 16px;
-  text-align: left;
+  text-align: center;
   font-weight: 600;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
 }
 
 .employees-table td {
   padding: 14px 16px;
   border-bottom: 1px solid #e0e0e0;
   font-size: 14px;
+  vertical-align: middle;
+  text-align: center;
 }
 
 .employees-table tbody tr:hover {
@@ -124,11 +130,6 @@
 .status-inactivo {
   background-color: #f8d7da;
   color: #721c24;
-}
-
-.actions {
-  display: flex;
-  gap: 8px;
 }
 
 .btn-icon {

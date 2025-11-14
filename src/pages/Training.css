@@ -155,11 +155,13 @@
 
 .table-container {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .attendance-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 600px;
 }
 
 .attendance-table thead {
@@ -169,17 +171,22 @@
 
 .attendance-table th {
   padding: 16px;
-  text-align: left;
+  text-align: center;
   font-weight: 600;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
 }
 
 .attendance-table td {
   padding: 14px 16px;
   border-bottom: 1px solid #e0e0e0;
   font-size: 14px;
+  vertical-align: middle;
+  text-align: center;
 }
 
 .attendance-table tbody tr:hover {

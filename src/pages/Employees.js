@@ -65,8 +65,8 @@ const Employees = () => {
                       {employee.status}
                     </span>
                   </td>
-                  <td className="actions">
-                    <button className="btn-icon btn-edit" title="Editar">
+                  <td>
+                    <button className="btn-icon btn-edit" title="Editar" style={{ marginRight: '8px' }}>
                       <FaEdit />
                     </button>
                     <button className="btn-icon btn-delete" title="Eliminar">
