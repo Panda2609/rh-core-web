@@ -94,6 +94,29 @@ const Training = () => {
       </div>
 
       <div className="page-content">
+
+        <div className="stats-grid">
+          <div className="stat-card">
+            <FaGraduationCap className="stat-icon" />
+            <h3>Capacitaciones Activas</h3>
+            <p className="stat-value">{trainings.filter(t => t.status === 'En Progreso').length}</p>
+          </div>
+          <div className="stat-card">
+            <FaCheckCircle className="stat-icon" />
+            <h3>Completadas</h3>
+            <p className="stat-value">{trainings.filter(t => t.status === 'Completada').length}</p>
+          </div>
+          <div className="stat-card">
+            <FaUsers className="stat-icon" />
+            <h3>Participantes Totales</h3>
+            <p className="stat-value">{trainings.reduce((sum, t) => sum + t.participants, 0)}</p>
+          </div>
+          <div className="stat-card">
+            <h3>Total Horas Invertidas</h3>
+            <p className="stat-value">{trainings.reduce((sum, t) => sum + t.hours, 0)}h</p>
+          </div>
+        </div>
+
         <div className="content-section">
           <h2>Registro de Capacitaciones</h2>
           <div className="trainings-grid">
@@ -171,27 +194,7 @@ const Training = () => {
           </div>
         </div>
 
-        <div className="stats-grid">
-          <div className="stat-card">
-            <FaGraduationCap className="stat-icon" />
-            <h3>Capacitaciones Activas</h3>
-            <p className="stat-value">{trainings.filter(t => t.status === 'En Progreso').length}</p>
-          </div>
-          <div className="stat-card">
-            <FaCheckCircle className="stat-icon" />
-            <h3>Completadas</h3>
-            <p className="stat-value">{trainings.filter(t => t.status === 'Completada').length}</p>
-          </div>
-          <div className="stat-card">
-            <FaUsers className="stat-icon" />
-            <h3>Participantes Totales</h3>
-            <p className="stat-value">{trainings.reduce((sum, t) => sum + t.participants, 0)}</p>
-          </div>
-          <div className="stat-card">
-            <h3>Total Horas Invertidas</h3>
-            <p className="stat-value">{trainings.reduce((sum, t) => sum + t.hours, 0)}h</p>
-          </div>
-        </div>
+        
       </div>
     </div>
   );
