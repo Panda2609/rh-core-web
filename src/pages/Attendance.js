@@ -96,10 +96,32 @@ const Attendance = () => {
 
   return (
     <div className="page-container">
+
+        
+
       <div className="page-header">
         <h1>Gestión de Asistencia</h1>
         <button className="btn btn-primary">Registrar Asistencia</button>
       </div>
+
+        <div className="stats-grid">
+            <div className="stat-card">
+            <h3>Presentes Hoy</h3>
+            <p className="stat-value">{attendance.filter(a => a.status === 'Presente').length}</p>
+            </div>
+            <div className="stat-card">
+            <h3>Ausentes</h3>
+            <p className="stat-value">{attendance.filter(a => a.status === 'Ausente').length}</p>
+            </div>
+            <div className="stat-card">
+            <h3>En Permiso</h3>
+            <p className="stat-value">{attendance.filter(a => a.status === 'Permiso').length}</p>
+            </div>
+            <div className="stat-card">
+            <h3>Solicitudes Pendientes</h3>
+            <p className="stat-value">{leaves.filter(l => l.status === 'Pendiente').length}</p>
+            </div>
+        </div>
 
       <div className="page-content">
         <div className="content-section">
@@ -162,24 +184,6 @@ const Attendance = () => {
           </div>
         </div>
 
-        <div className="stats-grid">
-          <div className="stat-card">
-            <h3>Presentes Hoy</h3>
-            <p className="stat-value">{attendance.filter(a => a.status === 'Presente').length}</p>
-          </div>
-          <div className="stat-card">
-            <h3>Ausentes</h3>
-            <p className="stat-value">{attendance.filter(a => a.status === 'Ausente').length}</p>
-          </div>
-          <div className="stat-card">
-            <h3>En Permiso</h3>
-            <p className="stat-value">{attendance.filter(a => a.status === 'Permiso').length}</p>
-          </div>
-          <div className="stat-card">
-            <h3>Solicitudes Pendientes</h3>
-            <p className="stat-value">{leaves.filter(l => l.status === 'Pendiente').length}</p>
-          </div>
-        </div>
       </div>
     </div>
   );
