@@ -2,34 +2,59 @@ import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaPlus, FaDownload } from 'react-icons/fa';
 import { employeesData } from '../data/employees';
 import Modal from '../components/Modal';
+import EmployeeForm from '../components/EmployeeForm';
 import DevelopmentNotice from '../components/DevelopmentNotice';
 import './Employees.css';
 
 const Employees = () => {
-  const [employees] = useState(employeesData);
+  const [employees, setEmployees] = useState(employeesData);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
+  const [modalType, setModalType] = useState(''); // 'create', 'edit', 'delete', 'export'
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
-  const openModal = (title) => {
-    setModalTitle(title);
+  const openModal = (type = '', employee = null) => {
+    setModalType(type);
+    setSelectedEmployee(employee);
     setIsModalOpen(true);
+  };
+
+  const handleAddEmployee = (newEmployeeData) => {
+    const newEmployee = {
+      ...newEmployeeData,
+      id: Math.max(...employees.map(e => e.id), 0) + 1
+    };
+    setEmployees(prev => [...prev, newEmployee]);
+    setIsModalOpen(false);
+  };
+
+  const handleEditEmployee = (updatedEmployeeData) => {
+    setEmployees(prev => 
+      prev.map(emp => emp.id === updatedEmployeeData.id ? updatedEmployeeData : emp)
+    );
+    setIsModalOpen(false);
+  };
+
+  const handleDeleteEmployee = () => {
+    if (selectedEmployee) {
+      setEmployees(prev => prev.filter(emp => emp.id !== selectedEmployee.id));
+      setIsModalOpen(false);
+    }
   };
 
   return (
     <div className="page-container">
-
       <div className="page-header">
         <h1>Gestión de Empleados</h1>
         <div className="header-actions">
           <button 
             className="btn btn-primary"
-            onClick={() => openModal('Nuevo Empleado')}
+            onClick={() => openModal('create')}
           >
             <FaPlus /> Nuevo Empleado
           </button>
           <button 
             className="btn btn-secondary"
-            onClick={() => openModal('Exportar Empleados')}
+            onClick={() => openModal('export')}
           >
             <FaDownload /> Exportar
           </button>
@@ -85,14 +110,14 @@ const Employees = () => {
                       className="btn-icon btn-edit" 
                       title="Editar" 
                       style={{ marginRight: '8px' }}
-                      onClick={() => openModal(`Editar Empleado: ${employee.name}`)}
+                      onClick={() => openModal('edit', employee)}
                     >
                       <FaEdit />
                     </button>
                     <button 
                       className="btn-icon btn-delete" 
                       title="Eliminar"
-                      onClick={() => openModal(`Eliminar Empleado: ${employee.name}`)}
+                      onClick={() => openModal('delete', employee)}
                     >
                       <FaTrash />
                     </button>
@@ -107,10 +132,41 @@ const Employees = () => {
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        title={modalTitle}
+        title={modalType === 'create' ? 'Nuevo Empleado' : modalType === 'edit' ? `Editar Empleado: ${selectedEmployee?.name}` : modalType === 'delete' ? `Eliminar Empleado` : 'Exportar Empleados'}
         size="medium"
       >
-        <DevelopmentNotice feature={modalTitle} />
+        {(modalType === 'create' || modalType === 'edit') && (
+          <EmployeeForm 
+            employee={modalType === 'edit' ? selectedEmployee : null}
+            onSubmit={modalType === 'create' ? handleAddEmployee : handleEditEmployee}
+            onCancel={() => setIsModalOpen(false)}
+          />
+        )}
+
+        {modalType === 'delete' && selectedEmployee && (
+          <div className="delete-confirmation">
+            <p>¿Estás seguro de que deseas eliminar al empleado <strong>{selectedEmployee.name}</strong>?</p>
+            <p className="warning-text">Esta acción no se puede deshacer.</p>
+            <div className="form-actions">
+              <button 
+                className="btn btn-secondary"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Cancelar
+              </button>
+              <button 
+                className="btn btn-danger"
+                onClick={handleDeleteEmployee}
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        )}
+
+        {modalType === 'export' && (
+          <DevelopmentNotice feature="Exportar Empleados" />
+        )}
       </Modal>
     </div>
   );

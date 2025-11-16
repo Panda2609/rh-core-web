@@ -196,6 +196,29 @@
   color: #667eea;
 }
 
+.delete-confirmation {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.delete-confirmation p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.delete-confirmation strong {
+  font-weight: 700;
+  color: #c62828;
+}
+
+.warning-text {
+  color: #f57c00 !important;
+  font-size: 13px;
+  font-weight: 500;
+}
+
 @media (max-width: 1024px) {
   .page-container {
     margin-left: 70px;
