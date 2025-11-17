@@ -2,18 +2,34 @@ import React, { useState } from 'react';
 import { FaStar, FaPlusCircle } from 'react-icons/fa';
 import { evaluationsData, performanceByArea } from '../data/performance';
 import Modal from '../components/Modal';
-import DevelopmentNotice from '../components/DevelopmentNotice';
+import PerformanceForm from '../components/PerformanceForm';
 import './Performance.css';
 
 const Performance = () => {
-  const [evaluations] = useState(evaluationsData);
+  const [evaluations, setEvaluations] = useState(evaluationsData);
   const [performanceAreaData] = useState(performanceByArea);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
+  const [selectedEvaluation, setSelectedEvaluation] = useState(null);
 
-  const openModal = (title) => {
-    setModalTitle(title);
+  const openModal = (evaluation = null) => {
+    setSelectedEvaluation(evaluation);
     setIsModalOpen(true);
+  };
+
+  const handleAddEvaluation = (newEvaluationData) => {
+    const newEvaluation = {
+      ...newEvaluationData,
+      id: Math.max(...evaluations.map(e => e.id), 0) + 1
+    };
+    setEvaluations(prev => [...prev, newEvaluation]);
+    setIsModalOpen(false);
+  };
+
+  const handleEditEvaluation = (updatedEvaluationData) => {
+    setEvaluations(prev =>
+      prev.map(evaluation => evaluation.id === updatedEvaluationData.id ? updatedEvaluationData : evaluation)
+    );
+    setIsModalOpen(false);
   };
 
   const getScoreColor = (score) => {
@@ -42,7 +58,7 @@ const Performance = () => {
         <h1>Evaluaciones de Desempeño</h1>
         <button 
           className="btn btn-primary"
-          onClick={() => openModal('Nueva Evaluación de Desempeño')}
+          onClick={() => openModal()}
         >
           <FaPlusCircle /> Nueva Evaluación
         </button>
@@ -190,10 +206,14 @@ const Performance = () => {
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        title={modalTitle}
+        title={selectedEvaluation ? 'Editar Evaluación' : 'Nueva Evaluación de Desempeño'}
         size="medium"
       >
-        <DevelopmentNotice feature={modalTitle} />
+        <PerformanceForm 
+          evaluation={selectedEvaluation}
+          onSubmit={selectedEvaluation ? handleEditEvaluation : handleAddEvaluation}
+          onCancel={() => setIsModalOpen(false)}
+        />
       </Modal>
     </div>
   );
