@@ -2,18 +2,43 @@ import React, { useState } from 'react';
 import { FaUserShield, FaEdit, FaTrash, FaPlus, FaLock } from 'react-icons/fa';
 import { usersData, rolesData } from '../data/users';
 import Modal from '../components/Modal';
-import DevelopmentNotice from '../components/DevelopmentNotice';
+import UserForm from '../components/UserForm';
 import './Users.css';
 
 const Users = () => {
-  const [users] = useState(usersData);
+  const [users, setUsers] = useState(usersData);
   const [roles] = useState(rolesData);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
+  const [modalType, setModalType] = useState(''); // 'create', 'edit', 'delete'
+  const [selectedUser, setSelectedUser] = useState(null);
 
-  const openModal = (title) => {
-    setModalTitle(title);
+  const openModal = (type = 'create', user = null) => {
+    setModalType(type);
+    setSelectedUser(user);
     setIsModalOpen(true);
+  };
+
+  const handleAddUser = (newUserData) => {
+    const newUser = {
+      ...newUserData,
+      id: Math.max(...users.map(u => u.id), 0) + 1
+    };
+    setUsers(prev => [...prev, newUser]);
+    setIsModalOpen(false);
+  };
+
+  const handleEditUser = (updatedUserData) => {
+    setUsers(prev =>
+      prev.map(user => user.id === updatedUserData.id ? updatedUserData : user)
+    );
+    setIsModalOpen(false);
+  };
+
+  const handleDeleteUser = () => {
+    if (selectedUser) {
+      setUsers(prev => prev.filter(user => user.id !== selectedUser.id));
+      setIsModalOpen(false);
+    }
   };
 
   const getRoleBadgeColor = (role) => {
@@ -25,7 +50,7 @@ const Users = () => {
     <div className="page-container">
       <div className="page-header">
         <h1>Usuarios y Roles</h1>
-        <button className="btn btn-primary" onClick={() => openModal('Nuevo Usuario')}>
+        <button className="btn btn-primary" onClick={() => openModal('create')}>
           <FaPlus /> Nuevo Usuario
         </button>
       </div>
@@ -92,14 +117,14 @@ const Users = () => {
                         className="btn-icon btn-edit" 
                         title="Editar" 
                         style={{ marginRight: '8px' }}
-                        onClick={() => openModal(`Editar Usuario: ${user.name}`)}
+                        onClick={() => openModal('edit', user)}
                       >
                         <FaEdit />
                       </button>
                       <button 
                         className="btn-icon btn-delete" 
                         title="Eliminar"
-                        onClick={() => openModal(`Eliminar Usuario: ${user.name}`)}
+                        onClick={() => openModal('delete', user)}
                       >
                         <FaTrash />
                       </button>
@@ -202,10 +227,38 @@ const Users = () => {
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        title={modalTitle}
+        title={modalType === 'create' ? 'Nuevo Usuario' : modalType === 'edit' ? `Editar Usuario: ${selectedUser?.name}` : `Eliminar Usuario`}
         size="medium"
       >
-        <DevelopmentNotice feature={modalTitle} />
+        {(modalType === 'create' || modalType === 'edit') && (
+          <UserForm 
+            user={modalType === 'edit' ? selectedUser : null}
+            roles={roles}
+            onSubmit={modalType === 'create' ? handleAddUser : handleEditUser}
+            onCancel={() => setIsModalOpen(false)}
+          />
+        )}
+
+        {modalType === 'delete' && selectedUser && (
+          <div className="delete-confirmation">
+            <p>¿Estás seguro de que deseas eliminar al usuario <strong>{selectedUser.name}</strong>?</p>
+            <p className="warning-text">Esta acción no se puede deshacer.</p>
+            <div className="form-actions">
+              <button 
+                className="btn btn-secondary"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Cancelar
+              </button>
+              <button 
+                className="btn btn-danger"
+                onClick={handleDeleteUser}
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        )}
       </Modal>
     </div>
   );

@@ -413,3 +413,53 @@
     padding: 8px 6px;
   }
 }
+
+.delete-confirmation {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.delete-confirmation p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.delete-confirmation strong {
+  font-weight: 700;
+  color: #c62828;
+}
+
+.warning-text {
+  color: #f57c00 !important;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.form-actions .btn {
+  flex: 0 1 auto;
+  min-width: 120px;
+}
+
+.btn-danger {
+  background-color: #c62828;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #ad1d1d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(198, 40, 40, 0.4);
+}
+
+

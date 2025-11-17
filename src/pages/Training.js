@@ -2,18 +2,34 @@ import React, { useState } from 'react';
 import { FaGraduationCap, FaCheckCircle, FaClock, FaUsers } from 'react-icons/fa';
 import { trainingsData, attendanceByEmployee } from '../data/training';
 import Modal from '../components/Modal';
-import DevelopmentNotice from '../components/DevelopmentNotice';
+import TrainingForm from '../components/TrainingForm';
 import './Training.css';
 
 const Training = () => {
-  const [trainings] = useState(trainingsData);
+  const [trainings, setTrainings] = useState(trainingsData);
   const [attendance] = useState(attendanceByEmployee);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
+  const [selectedTraining, setSelectedTraining] = useState(null);
 
-  const openModal = (title) => {
-    setModalTitle(title);
+  const openModal = (training = null) => {
+    setSelectedTraining(training);
     setIsModalOpen(true);
+  };
+
+  const handleAddTraining = (newTrainingData) => {
+    const newTraining = {
+      ...newTrainingData,
+      id: Math.max(...trainings.map(t => t.id), 0) + 1
+    };
+    setTrainings(prev => [...prev, newTraining]);
+    setIsModalOpen(false);
+  };
+
+  const handleEditTraining = (updatedTrainingData) => {
+    setTrainings(prev =>
+      prev.map(training => training.id === updatedTrainingData.id ? updatedTrainingData : training)
+    );
+    setIsModalOpen(false);
   };
 
   const getStatusColor = (status) => {
@@ -48,7 +64,7 @@ const Training = () => {
         <h1>Gestión de Capacitación</h1>
         <button 
           className="btn btn-primary"
-          onClick={() => openModal('Registrar Capacitación')}
+          onClick={() => openModal()}
         >
           <FaGraduationCap /> Registrar Capacitación
         </button>
@@ -161,10 +177,14 @@ const Training = () => {
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        title={modalTitle}
+        title={selectedTraining ? 'Editar Capacitación' : 'Registrar Capacitación'}
         size="medium"
       >
-        <DevelopmentNotice feature={modalTitle} />
+        <TrainingForm 
+          training={selectedTraining}
+          onSubmit={selectedTraining ? handleEditTraining : handleAddTraining}
+          onCancel={() => setIsModalOpen(false)}
+        />
       </Modal>
     </div>
   );
