@@ -2,17 +2,20 @@ import React, { useState } from 'react';
 import { FaCheck, FaTimes, FaClock, FaCalendarAlt } from 'react-icons/fa';
 import { attendanceData, leavesData } from '../data/attendance';
 import Modal from '../components/Modal';
-import DevelopmentNotice from '../components/DevelopmentNotice';
+import AttendanceForm from '../components/AttendanceForm';
 import './Attendance.css';
 
 const Attendance = () => {
-  const [attendance] = useState(attendanceData);
+  const [attendance, setAttendance] = useState(attendanceData);
   const [leaves] = useState(leavesData);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
+  const [modalType, setModalType] = useState(''); // 'register', 'edit'
+  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [selectedDate, setSelectedDate] = useState('2025-11-13');
 
-  const openModal = (title) => {
-    setModalTitle(title);
+  const openModal = (type = 'register', record = null) => {
+    setModalType(type);
+    setSelectedRecord(record);
     setIsModalOpen(true);
   };
 
@@ -29,28 +32,49 @@ const Attendance = () => {
     }
   };
 
+  const handleAddAttendance = (newAttendanceData) => {
+    const newRecord = {
+      ...newAttendanceData,
+      id: Math.max(...attendance.map(a => a.id), 0) + 1
+    };
+    setAttendance(prev => [...prev, newRecord]);
+    setIsModalOpen(false);
+  };
+
+  const handleEditAttendance = (updatedAttendanceData) => {
+    setAttendance(prev =>
+      prev.map(record => record.id === updatedAttendanceData.id ? updatedAttendanceData : record)
+    );
+    setIsModalOpen(false);
+  };
+
+  // Filtrar asistencia por fecha seleccionada
+  const filteredAttendance = attendance.filter(a => a.date === selectedDate);
+
   return (
     <div className="page-container">
-
-        
-
       <div className="page-header">
         <h1>Gestión de Asistencia</h1>
-        <button className="btn btn-primary">Registrar Asistencia</button>
+        <button 
+          className="btn btn-primary"
+          onClick={() => openModal('register')}
+        >
+          Registrar Asistencia
+        </button>
       </div>
 
         <div className="stats-grid">
             <div className="stat-card">
             <h3>Presentes Hoy</h3>
-            <p className="stat-value">{attendance.filter(a => a.status === 'Presente').length}</p>
+            <p className="stat-value">{filteredAttendance.filter(a => a.status === 'Presente').length}</p>
             </div>
             <div className="stat-card">
             <h3>Ausentes</h3>
-            <p className="stat-value">{attendance.filter(a => a.status === 'Ausente').length}</p>
+            <p className="stat-value">{filteredAttendance.filter(a => a.status === 'Ausente').length}</p>
             </div>
             <div className="stat-card">
             <h3>En Permiso</h3>
-            <p className="stat-value">{attendance.filter(a => a.status === 'Permiso').length}</p>
+            <p className="stat-value">{filteredAttendance.filter(a => a.status === 'Permiso').length}</p>
             </div>
             <div className="stat-card">
             <h3>Solicitudes Pendientes</h3>
@@ -63,7 +87,11 @@ const Attendance = () => {
           <h2>Registro de Asistencia Diaria</h2>
           <div className="date-filter">
             <FaCalendarAlt />
-            <input type="date" defaultValue="2025-11-13" />
+            <input 
+              type="date" 
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+            />
           </div>
 
           <div className="table-container">
@@ -78,7 +106,7 @@ const Attendance = () => {
                 </tr>
               </thead>
               <tbody>
-                {attendance.map((record) => (
+                {filteredAttendance.map((record) => (
                   <tr key={record.id}>
                     <td>{record.employee}</td>
                     <td>{record.entryTime || '-'}</td>
@@ -124,10 +152,16 @@ const Attendance = () => {
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        title={modalTitle}
+        title={modalType === 'register' ? 'Registrar Asistencia' : 'Editar Asistencia'}
         size="medium"
       >
-        <DevelopmentNotice feature={modalTitle} />
+        {(modalType === 'register' || modalType === 'edit') && (
+          <AttendanceForm 
+            record={modalType === 'edit' ? selectedRecord : null}
+            onSubmit={modalType === 'register' ? handleAddAttendance : handleEditAttendance}
+            onCancel={() => setIsModalOpen(false)}
+          />
+        )}
       </Modal>
     </div>
   );
