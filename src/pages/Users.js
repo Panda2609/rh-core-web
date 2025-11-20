@@ -3,6 +3,7 @@ import { FaUserShield, FaEdit, FaTrash, FaPlus, FaLock } from 'react-icons/fa';
 import { usersData, rolesData } from '../data/users';
 import Modal from '../components/Modal';
 import UserForm from '../components/UserForm';
+import DevelopmentNotice from '../components/DevelopmentNotice';
 import './Users.css';
 
 const Users = () => {
@@ -11,6 +12,7 @@ const Users = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(''); // 'create', 'edit', 'delete'
   const [selectedUser, setSelectedUser] = useState(null);
+  const [developmentFeature, setDevelopmentFeature] = useState('');
 
   const openModal = (type = 'create', user = null) => {
     setModalType(type);
@@ -185,7 +187,11 @@ const Users = () => {
               <p>Configurar requisitos mínimos de seguridad</p>
               <button 
                 className="btn-secondary"
-                onClick={() => openModal('Políticas de Contraseña')}
+                onClick={() => {
+                  setModalType('development');
+                  setDevelopmentFeature('Políticas de Contraseña');
+                  setIsModalOpen(true);
+                }}
               >
                 Configurar
               </button>
@@ -195,7 +201,11 @@ const Users = () => {
               <p>Ver registro de accesos y cambios en el sistema</p>
               <button 
                 className="btn-secondary"
-                onClick={() => openModal('Auditoría y Logs')}
+                onClick={() => {
+                  setModalType('development');
+                  setDevelopmentFeature('Auditoría y Logs');
+                  setIsModalOpen(true);
+                }}
               >
                 Ver Logs
               </button>
@@ -205,7 +215,11 @@ const Users = () => {
               <p>Asignar permisos granulares a cada módulo</p>
               <button 
                 className="btn-secondary"
-                onClick={() => openModal('Gestionar Permisos por Módulo')}
+                onClick={() => {
+                  setModalType('development');
+                  setDevelopmentFeature('Permisos por Módulo');
+                  setIsModalOpen(true);
+                }}
               >
                 Gestionar Permisos
               </button>
@@ -215,7 +229,11 @@ const Users = () => {
               <p>Realizar copias de seguridad del sistema</p>
               <button 
                 className="btn-secondary"
-                onClick={() => openModal('Backup y Recuperación')}
+                onClick={() => {
+                  setModalType('development');
+                  setDevelopmentFeature('Backup y Recuperación');
+                  setIsModalOpen(true);
+                }}
               >
                 Ejecutar Backup
               </button>
@@ -227,7 +245,7 @@ const Users = () => {
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        title={modalType === 'create' ? 'Nuevo Usuario' : modalType === 'edit' ? `Editar Usuario: ${selectedUser?.name}` : `Eliminar Usuario`}
+        title={modalType === 'create' ? 'Nuevo Usuario' : modalType === 'edit' ? `Editar Usuario: ${selectedUser?.name}` : modalType === 'delete' ? `Eliminar Usuario` : 'Funcionalidad en Desarrollo'}
         size="medium"
       >
         {(modalType === 'create' || modalType === 'edit') && (
@@ -258,6 +276,13 @@ const Users = () => {
               </button>
             </div>
           </div>
+        )}
+
+        {modalType === 'development' && (
+          <DevelopmentNotice 
+            feature={developmentFeature}
+            onClose={() => setIsModalOpen(false)}
+          />
         )}
       </Modal>
     </div>
