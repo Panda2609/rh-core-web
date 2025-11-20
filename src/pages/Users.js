@@ -3,15 +3,17 @@ import { FaUserShield, FaEdit, FaTrash, FaPlus, FaLock } from 'react-icons/fa';
 import { usersData, rolesData } from '../data/users';
 import Modal from '../components/Modal';
 import UserForm from '../components/UserForm';
+import RoleForm from '../components/RoleForm';
 import DevelopmentNotice from '../components/DevelopmentNotice';
 import './Users.css';
 
 const Users = () => {
   const [users, setUsers] = useState(usersData);
-  const [roles] = useState(rolesData);
+  const [roles, setRoles] = useState(rolesData);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState(''); // 'create', 'edit', 'delete'
+  const [modalType, setModalType] = useState(''); // 'create', 'edit', 'delete', 'edit-role', 'delete-role', 'development'
   const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedRole, setSelectedRole] = useState(null);
   const [developmentFeature, setDevelopmentFeature] = useState('');
 
   const openModal = (type = 'create', user = null) => {
@@ -39,6 +41,20 @@ const Users = () => {
   const handleDeleteUser = () => {
     if (selectedUser) {
       setUsers(prev => prev.filter(user => user.id !== selectedUser.id));
+      setIsModalOpen(false);
+    }
+  };
+
+  const handleEditRole = (updatedRoleData) => {
+    setRoles(prev =>
+      prev.map(role => role.id === selectedRole.id ? { ...selectedRole, ...updatedRoleData } : role)
+    );
+    setIsModalOpen(false);
+  };
+
+  const handleDeleteRole = () => {
+    if (selectedRole) {
+      setRoles(prev => prev.filter(role => role.id !== selectedRole.id));
       setIsModalOpen(false);
     }
   };
@@ -163,13 +179,21 @@ const Users = () => {
                 <div className="role-actions">
                   <button 
                     className="btn-small"
-                    onClick={() => openModal(`Editar Rol: ${role.name}`)}
+                    onClick={() => {
+                      setModalType('edit-role');
+                      setSelectedRole(role);
+                      setIsModalOpen(true);
+                    }}
                   >
                     Editar Rol
                   </button>
                   <button 
                     className="btn-small btn-danger"
-                    onClick={() => openModal(`Eliminar Rol: ${role.name}`)}
+                    onClick={() => {
+                      setModalType('delete-role');
+                      setSelectedRole(role);
+                      setIsModalOpen(true);
+                    }}
                   >
                     Eliminar
                   </button>
@@ -245,7 +269,14 @@ const Users = () => {
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        title={modalType === 'create' ? 'Nuevo Usuario' : modalType === 'edit' ? `Editar Usuario: ${selectedUser?.name}` : modalType === 'delete' ? `Eliminar Usuario` : 'Funcionalidad en Desarrollo'}
+        title={
+          modalType === 'create' ? 'Nuevo Usuario' : 
+          modalType === 'edit' ? `Editar Usuario: ${selectedUser?.name}` : 
+          modalType === 'delete' ? `Eliminar Usuario` :
+          modalType === 'edit-role' ? `Editar Rol: ${selectedRole?.name}` :
+          modalType === 'delete-role' ? `Eliminar Rol` :
+          'Funcionalidad en Desarrollo'
+        }
         size="medium"
       >
         {(modalType === 'create' || modalType === 'edit') && (
@@ -271,6 +302,36 @@ const Users = () => {
               <button 
                 className="btn btn-danger"
                 onClick={handleDeleteUser}
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        )}
+
+        {modalType === 'edit-role' && selectedRole && (
+          <RoleForm 
+            role={selectedRole}
+            onSubmit={handleEditRole}
+            onCancel={() => setIsModalOpen(false)}
+            formType="edit"
+          />
+        )}
+
+        {modalType === 'delete-role' && selectedRole && (
+          <div className="delete-confirmation">
+            <p>¿Estás seguro de que deseas eliminar el rol <strong>{selectedRole.name}</strong>?</p>
+            <p className="warning-text">Esta acción no se puede deshacer.</p>
+            <div className="form-actions">
+              <button 
+                className="btn btn-secondary"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Cancelar
+              </button>
+              <button 
+                className="btn btn-danger"
+                onClick={handleDeleteRole}
               >
                 Eliminar
               </button>
