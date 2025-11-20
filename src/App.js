@@ -10,18 +10,17 @@ import './App.css';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/rh-core-web">
       <div className="App">
         <Sidebar />
         <Routes>
           <Route path="/" element={<Employees />} />
-          <Route path="/rh-core-web" element={<Employees />} />
-          <Route path="/rh-core-web/employees" element={<Employees />} />
-          <Route path="/rh-core-web/attendance" element={<Attendance />} />
-          <Route path="/rh-core-web/payroll" element={<Payroll />} />
-          <Route path="/rh-core-web/performance" element={<Performance />} />
-          <Route path="/rh-core-web/training" element={<Training />} />
-          <Route path="/rh-core-web/users" element={<Users />} />
+          <Route path="/employees" element={<Employees />} />
+          <Route path="/attendance" element={<Attendance />} />
+          <Route path="/payroll" element={<Payroll />} />
+          <Route path="/performance" element={<Performance />} />
+          <Route path="/training" element={<Training />} />
+          <Route path="/users" element={<Users />} />
         </Routes>
       </div>
     </Router>
