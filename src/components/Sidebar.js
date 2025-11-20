@@ -5,12 +5,12 @@ import './Sidebar.css';
 
 const Sidebar = () => {
   const menuItems = [
-    { id: 1, label: 'Empleados', path: '/employees', icon: FaUsers },
-    { id: 2, label: 'Asistencia', path: '/attendance', icon: FaClipboardList },
-    { id: 3, label: 'Remuneraciones', path: '/payroll', icon: FaMoneyBillWave },
-    { id: 4, label: 'Evaluaciones', path: '/performance', icon: FaStar },
-    { id: 5, label: 'Capacitación', path: '/training', icon: FaBook },
-    { id: 6, label: 'Usuarios y Roles', path: '/users', icon: FaLock },
+    { id: 1, label: 'Empleados', path: '/rh-core-web/employees', icon: FaUsers },
+    { id: 2, label: 'Asistencia', path: '/rh-core-web/attendance', icon: FaClipboardList },
+    { id: 3, label: 'Remuneraciones', path: '/rh-core-web/payroll', icon: FaMoneyBillWave },
+    { id: 4, label: 'Evaluaciones', path: '/rh-core-web/performance', icon: FaStar },
+    { id: 5, label: 'Capacitación', path: '/rh-core-web/training', icon: FaBook },
+    { id: 6, label: 'Usuarios y Roles', path: '/rh-core-web/users', icon: FaLock },
   ];
 
   return (
