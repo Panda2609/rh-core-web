@@ -145,18 +145,18 @@
 }
 
 .status-presente {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: #a8d5a8;
+  color: #1e5a1e;
 }
 
 .status-ausente {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: #e89a9a;
+  color: #5a1a1a;
 }
 
 .status-permiso {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: #ffd966;
+  color: #664d00;
 }
 
 .icon-check,
